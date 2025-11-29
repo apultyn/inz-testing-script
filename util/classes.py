@@ -10,6 +10,11 @@ class ServiceConfig:
     login_url: str
     client_id: str = ""
 
+    def get_url(self, endpoint: str):
+        clean_base = self.base_url.rstrip("/")
+        clean_endpoint = endpoint.lstrip("/").rstrip("/")
+        return f"{clean_base}/{clean_endpoint}/"
+
 
 @dataclass
 class User:
