@@ -13,6 +13,20 @@
       "auth_type": "KEYCLOAK",
       "login_url": "http://localhost:8080/realms/book-reviews-realm/protocol/openid-connect/token",
       "client_id": "spring-app"
+    },
+    "nest_jwt": {
+      "name": "Nest JWT",
+      "base_url": "http://localhost:50007",
+      "auth_type": "SIMPLE_JWT",
+      "login_url": "http://localhost:50007/api/auth/login/",
+      "client_id": ""
+    },
+    "nest_keycloak": {
+      "name": "Nest Keycloak",
+      "base_url": "http://localhost:50016",
+      "auth_type": "KEYCLOAK",
+      "login_url": "http://localhost:8080/realms/book-reviews-realm/protocol/openid-connect/token",
+      "client_id": "nest-app"
     }
   },
   "users": {
