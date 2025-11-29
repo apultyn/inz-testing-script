@@ -2,6 +2,16 @@ from enum import Enum
 from dataclasses import dataclass
 
 
+class TestTypeEnum(Enum):
+    SIMPLE_JWT = 1
+    KEYCLOAK = 2
+
+
+class UserRoleEnum(Enum):
+    BOOK_USER = 1
+    BOOK_ADMIN = 2
+
+
 @dataclass
 class ServiceConfig:
     name: str
@@ -21,13 +31,3 @@ class User:
     email: str
     password: str
     role: UserRoleEnum
-
-
-class TestTypeEnum(Enum):
-    SIMPLE_JWT = 1
-    KEYCLOAK = 2
-
-
-class UserRoleEnum(Enum):
-    BOOK_USER = 1
-    BOOK_ADMIN = 2
