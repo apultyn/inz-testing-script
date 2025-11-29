@@ -75,6 +75,96 @@
       "endpoint": "/api/books/1/",
       "expected_status": [200, 404],
       "body": {"title": "Test title" }
+    },
+    {
+      "scenario_name": "Delete book unauth",
+      "user_id": "",
+      "method": "DELETE",
+      "endpoint": "/api/books/1/",
+      "expected_status": [401]
+    },
+    {
+      "scenario_name": "Delete book user",
+      "user_id": "user",
+      "method": "DELETE",
+      "endpoint": "/api/books/1/",
+      "expected_status": [403]
+    },
+    {
+      "scenario_name": "Delete book admin",
+      "user_id": "admin",
+      "method": "DELETE",
+      "endpoint": "/api/books/1/",
+      "expected_status": [204, 404]
+    },
+    {
+      "scenario_name": "Create review unauth",
+      "user_id": "",
+      "method": "POST",
+      "endpoint": "/api/reviews/",
+      "expected_status": [401],
+      "body": {"stars": 5, "comment": "Awesome", "bookId": 1}
+    },
+    {
+      "scenario_name": "Create review user",
+      "user_id": "user",
+      "method": "POST",
+      "endpoint": "/api/reviews/",
+      "expected_status": [201, 404],
+      "body": {"stars": 5, "comment": "Awesome", "bookId": 1}
+    },
+    {
+      "scenario_name": "Create review admin",
+      "user_id": "admin",
+      "method": "POST",
+      "endpoint": "/api/reviews/",
+      "expected_status": [201, 404, 400],
+      "body": {"stars": 5, "comment": "Awesome", "bookId": 1}
+    },
+    {
+      "scenario_name": "Update review unauth",
+      "user_id": "",
+      "method": "PATCH",
+      "endpoint": "/api/reviews/1/",
+      "expected_status": [401],
+      "body": {"stars": 1 }
+    },
+    {
+      "scenario_name": "Update review user",
+      "user_id": "user",
+      "method": "PATCH",
+      "endpoint": "/api/reviews/1/",
+      "expected_status": [403],
+      "body": {"stars": 1 }
+    },
+    {
+      "scenario_name": "Update review admin",
+      "user_id": "admin",
+      "method": "PATCH",
+      "endpoint": "/api/reviews/1/",
+      "expected_status": [200, 404],
+      "body": {"stars": 1 }
+    },
+    {
+      "scenario_name": "Delete review unauth",
+      "user_id": "",
+      "method": "DELETE",
+      "endpoint": "/api/reviews/1/",
+      "expected_status": [401]
+    },
+    {
+      "scenario_name": "Delete review user",
+      "user_id": "user",
+      "method": "DELETE",
+      "endpoint": "/api/reviews/1/",
+      "expected_status": [403]
+    },
+    {
+      "scenario_name": "Delete review admin",
+      "user_id": "admin",
+      "method": "DELETE",
+      "endpoint": "/api/reviews/1/",
+      "expected_status": [204, 404]
     }
   ]
 }
