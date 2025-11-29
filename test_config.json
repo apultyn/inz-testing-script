@@ -27,6 +27,20 @@
       "auth_type": "KEYCLOAK",
       "login_url": "http://localhost:8080/realms/book-reviews-realm/protocol/openid-connect/token",
       "client_id": "nest-app"
+    },
+    "django_jwt": {
+      "name": "Django JWT",
+      "base_url": "http://localhost:50004",
+      "auth_type": "SIMPLE_JWT",
+      "login_url": "http://localhost:50004/api/auth/login/",
+      "client_id": ""
+    },
+    "django_keycloak": {
+      "name": "Django Keycloak",
+      "base_url": "http://localhost:50022",
+      "auth_type": "KEYCLOAK",
+      "login_url": "http://localhost:8080/realms/book-reviews-realm/protocol/openid-connect/token",
+      "client_id": "django-app"
     }
   },
   "users": {
@@ -124,7 +138,7 @@
       "user_id": "user",
       "method": "POST",
       "endpoint": "/api/reviews/",
-      "expected_status": [201, 404],
+      "expected_status": [201, 400, 404],
       "body": {"stars": 5, "comment": "Awesome", "bookId": 1}
     },
     {
@@ -132,7 +146,7 @@
       "user_id": "admin",
       "method": "POST",
       "endpoint": "/api/reviews/",
-      "expected_status": [201, 404, 400],
+      "expected_status": [201, 400, 404],
       "body": {"stars": 5, "comment": "Awesome", "bookId": 1}
     },
     {

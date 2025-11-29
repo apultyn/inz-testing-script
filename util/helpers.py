@@ -35,7 +35,7 @@ def get_token(service_conf: ServiceConfig, user: User):
         )
 
     data = response.json()
-    return data.get("access_token") or data.get("token")
+    return data.get("access_token") or data.get("token") or data.get("access")
 
 
 def load_test_data():
