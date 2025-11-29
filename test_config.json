@@ -1,0 +1,59 @@
+{
+  "services": {
+    "spring_jwt": {
+      "name": "Spring JWT",
+      "base_url": "http://localhost:50001",
+      "auth_type": "SIMPLE_JWT",
+      "login_url": "http://localhost:50001/api/auth/login/",
+      "client_id": ""
+    },
+    "spring_keycloak": {
+      "name": "Spring Keycloak",
+      "base_url": "http://localhost:50013",
+      "auth_type": "KEYCLOAK",
+      "login_url": "http://localhost:8080/realms/myrealm/protocol/openid-connect/token",
+      "client_id": "spring-app"
+    }
+  },
+  "users": {
+    "admin": {
+      "email": "admin@test.com",
+      "password": "test-passwd",
+      "role": "BOOK_ADMIN"
+    },
+    "user": {
+      "email": "user@test.com",
+      "password": "test-passwd",
+      "role": "BOOK_USER"
+    }
+  },
+  "scenarios": [
+    {
+      "scenario_name": "Create book unauth",
+      "service_id": "spring_jwt",
+      "user_id": "",
+      "method": "POST",
+      "endpoint": "/api/books/",
+      "expected_status": [401],
+      "body": {"title": "Test title", "author": "Test author"}
+    },
+    {
+      "scenario_name": "Create book user",
+      "service_id": "spring_jwt",
+      "user_id": "user",
+      "method": "POST",
+      "endpoint": "/api/books/",
+      "expected_status": [403],
+      "body": {"title": "Test title", "author": "Test author"}
+    },
+    {
+      "scenario_name": "Create book admin",
+      "service_id": "spring_jwt",
+      "user_id": "admin",
+      "method": "POST",
+      "endpoint": "/api/books/",
+      "expected_status": [201, 400],
+      "body": {"title": "Test title", "author": "Test author"}
+    }
+  ]
+}
