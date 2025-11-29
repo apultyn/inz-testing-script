@@ -41,6 +41,20 @@
       "auth_type": "KEYCLOAK",
       "login_url": "http://localhost:8080/realms/book-reviews-realm/protocol/openid-connect/token",
       "client_id": "django-app"
+    },
+    "laravel_jwt": {
+      "name": "Laravel JWT",
+      "base_url": "http://localhost:50010",
+      "auth_type": "SIMPLE_JWT",
+      "login_url": "http://localhost:50010/api/auth/login/",
+      "client_id": ""
+    },
+    "laravel_keycloak": {
+      "name": "Laravel Keycloak",
+      "base_url": "http://localhost:50019",
+      "auth_type": "KEYCLOAK",
+      "login_url": "http://localhost:8080/realms/book-reviews-realm/protocol/openid-connect/token",
+      "client_id": "laravel-app"
     }
   },
   "users": {
@@ -77,7 +91,7 @@
       "user_id": "admin",
       "method": "POST",
       "endpoint": "/api/books/",
-      "expected_status": [201, 404, 400],
+      "expected_status": [201, 400, 404, 422],
       "body": {"title": "Test title", "author": "Test author"}
     },
     {
@@ -138,7 +152,7 @@
       "user_id": "user",
       "method": "POST",
       "endpoint": "/api/reviews/",
-      "expected_status": [201, 400, 404],
+      "expected_status": [201, 400, 404, 422],
       "body": {"stars": 5, "comment": "Awesome", "bookId": 1}
     },
     {
@@ -146,7 +160,7 @@
       "user_id": "admin",
       "method": "POST",
       "endpoint": "/api/reviews/",
-      "expected_status": [201, 400, 404],
+      "expected_status": [201, 400, 404, 422],
       "body": {"stars": 5, "comment": "Awesome", "bookId": 1}
     },
     {
