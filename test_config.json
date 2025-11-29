@@ -11,7 +11,7 @@
       "name": "Spring Keycloak",
       "base_url": "http://localhost:50013",
       "auth_type": "KEYCLOAK",
-      "login_url": "http://localhost:8080/realms/myrealm/protocol/openid-connect/token",
+      "login_url": "http://localhost:8080/realms/book-reviews-realm/protocol/openid-connect/token",
       "client_id": "spring-app"
     }
   },
@@ -30,7 +30,6 @@
   "scenarios": [
     {
       "scenario_name": "Create book unauth",
-      "service_id": "spring_jwt",
       "user_id": "",
       "method": "POST",
       "endpoint": "/api/books/",
@@ -39,7 +38,6 @@
     },
     {
       "scenario_name": "Create book user",
-      "service_id": "spring_jwt",
       "user_id": "user",
       "method": "POST",
       "endpoint": "/api/books/",
@@ -48,7 +46,6 @@
     },
     {
       "scenario_name": "Create book admin",
-      "service_id": "spring_jwt",
       "user_id": "admin",
       "method": "POST",
       "endpoint": "/api/books/",

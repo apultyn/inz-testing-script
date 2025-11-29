@@ -11,6 +11,8 @@ def get_token(service_conf: ServiceConfig, user: User):
                 "email": user.email,
                 "password": user.password,
             }
+            headers = {"Content-Type": "application/json"}
+            response = requests.post(service_conf.login_url, json=payload, headers=headers)
 
         case TestTypeEnum.KEYCLOAK:
             payload = {
@@ -19,12 +21,13 @@ def get_token(service_conf: ServiceConfig, user: User):
                 "username": user.email,
                 "password": user.password,
             }
+            headers = {
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
+            response = requests.post(service_conf.login_url, data=payload, headers=headers)
 
         case _:
             raise ValueError(f"Unknown test type: {service_conf.auth_type}")
-
-    headers = {"Content-Type": "application/json"}
-    response = requests.post(service_conf.login_url, json=payload, headers=headers)
 
     if response.status_code != 200:
         raise Exception(
@@ -55,31 +58,33 @@ def load_test_data():
             email=u["email"], password=u["password"], role=UserRoleEnum[u["role"]]
         )
 
-    scenarios = []
-    for sc in data["scenarios"]:
-        service = services[sc["service_id"]]
-        user_key = sc.get("user_id")
+    final_scenarios = []
+    for _, service in services.items():
+        for sc in data["scenarios"]:
+            user_key = sc.get("user_id")
 
-        if user_key:
-            user = users.get(user_key)
+            if user_key:
+                user = users.get(user_key)
 
-            if not user:
-                raise ValueError(f"User with key {user_key} not found")
-        else:
-            user = None
+                if not user:
+                    raise ValueError(f"User with key {user_key} not found")
+            else:
+                user = None
 
-        body = sc.get("body", {})
+            body = sc.get("body", {})
 
-        scenarios.append(
-            (
-                sc["scenario_name"],
-                service,
-                user,
-                sc["method"],
-                sc["endpoint"],
-                sc["expected_status"],
-                body,
+            base_name = sc.get("name", f"{sc['method']} {sc['endpoint']}")
+            full_scenario_name = f"[{service.name}] {base_name}"
+            final_scenarios.append(
+                (
+                    full_scenario_name,
+                    service,
+                    user,
+                    sc["method"],
+                    sc["endpoint"],
+                    sc["expected_status"],
+                    body,
+                )
             )
-        )
 
-    return scenarios
+    return final_scenarios

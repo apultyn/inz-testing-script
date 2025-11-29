@@ -5,7 +5,7 @@ from util.helpers import load_test_data, get_token
 from util.classes import ServiceConfig, User
 
 TEST_SCENARIOS = load_test_data()
-
+print(TEST_SCENARIOS)
 
 @pytest.mark.parametrize(
     "scenatio_name, service, user, method, endpoint, expected_status, body",
