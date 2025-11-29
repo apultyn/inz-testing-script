@@ -12,7 +12,9 @@ def get_token(service_conf: ServiceConfig, user: User):
                 "password": user.password,
             }
             headers = {"Content-Type": "application/json"}
-            response = requests.post(service_conf.login_url, json=payload, headers=headers)
+            response = requests.post(
+                service_conf.login_url, json=payload, headers=headers
+            )
 
         case TestTypeEnum.KEYCLOAK:
             payload = {
@@ -21,10 +23,10 @@ def get_token(service_conf: ServiceConfig, user: User):
                 "username": user.email,
                 "password": user.password,
             }
-            headers = {
-                "Content-Type": "application/x-www-form-urlencoded"
-            }
-            response = requests.post(service_conf.login_url, data=payload, headers=headers)
+            headers = {"Content-Type": "application/x-www-form-urlencoded"}
+            response = requests.post(
+                service_conf.login_url, data=payload, headers=headers
+            )
 
         case _:
             raise ValueError(f"Unknown test type: {service_conf.auth_type}")
