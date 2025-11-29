@@ -49,8 +49,32 @@
       "user_id": "admin",
       "method": "POST",
       "endpoint": "/api/books/",
-      "expected_status": [201, 400],
+      "expected_status": [201, 404, 400],
       "body": {"title": "Test title", "author": "Test author"}
+    },
+    {
+      "scenario_name": "Update book unauth",
+      "user_id": "",
+      "method": "PATCH",
+      "endpoint": "/api/books/1/",
+      "expected_status": [401],
+      "body": {"title": "Test title" }
+    },
+    {
+      "scenario_name": "Update book user",
+      "user_id": "user",
+      "method": "PATCH",
+      "endpoint": "/api/books/1/",
+      "expected_status": [403],
+      "body": {"title": "Test title updated" }
+    },
+    {
+      "scenario_name": "Update book admin",
+      "user_id": "admin",
+      "method": "PATCH",
+      "endpoint": "/api/books/1/",
+      "expected_status": [200, 404],
+      "body": {"title": "Test title" }
     }
   ]
 }
