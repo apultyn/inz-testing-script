@@ -56,8 +56,8 @@ def load_test_data():
 
         final_scenarios = []
         for _, service in services.items():
-            for key, s_data in data["scenarios"].items():
-                scenario = TestScenario(*s_data)
+            for s_data in data["scenarios"]:
+                scenario = TestScenario(**s_data)
                 user_key = scenario.user_id
 
                 if user_key:
@@ -71,8 +71,8 @@ def load_test_data():
                 body = scenario.body
 
                 base_name = (
-                    scenario.name
-                    if scenario.name
+                    scenario.scenario_name
+                    if scenario.scenario_name
                     else f"{scenario.method}/{scenario.endpoint}"
                 )
                 full_scenario_name = f"[{service.name}] {base_name}"

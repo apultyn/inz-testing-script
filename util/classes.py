@@ -1,5 +1,6 @@
 from enum import Enum
-from pydantic import BaseModel, field, Literal
+from pydantic import BaseModel, Field
+from typing import Dict, List
 
 
 class TestTypeEnum(str, Enum):
@@ -17,7 +18,7 @@ class ServiceConfig(BaseModel):
     base_url: str
     auth_type: TestTypeEnum
     login_url: str
-    client_id: str = ""
+    client_id: str
 
     def get_url(self, endpoint: str):
         clean_base = self.base_url.rstrip("/")
@@ -32,10 +33,9 @@ class User(BaseModel):
 
 
 class TestScenario(BaseModel):
-    name: str = None
+    scenario_name: str
+    user_id: str
     method: str
     endpoint: str
-    expected_status: int
-    user_id: str = None
-    body: dict = field(default_factory=dict)
-    overrides: dict = field(default_factory=dict)
+    expected_status: List[int]
+    body: Dict = Field(default_factory=dict)
