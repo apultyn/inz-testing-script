@@ -2,3 +2,4 @@ pytest
 jwt
 python-dotenv
 requests
+pydantic

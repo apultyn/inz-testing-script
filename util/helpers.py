@@ -1,7 +1,8 @@
 import requests
 import json
 
-from .classes import ServiceConfig, User, TestTypeEnum, UserRoleEnum
+from pydantic import ValidationError
+from .classes import ServiceConfig, User, TestTypeEnum, TestScenario
 
 
 def get_token(service_conf: ServiceConfig, user: User):
@@ -45,48 +46,50 @@ def load_test_data():
         data = json.load(file_handle)
 
     services = {}
-    for key, s in data["services"].items():
-        services[key] = ServiceConfig(
-            name=s["name"],
-            base_url=s["base_url"],
-            auth_type=TestTypeEnum[s["auth_type"]],
-            login_url=s["login_url"],
-            client_id=s["client_id"],
-        )
+    try:
+        for key, s_data in data["services"].items():
+            services[key] = ServiceConfig(**s_data)
 
-    users = {}
-    for key, u in data["users"].items():
-        users[key] = User(
-            email=u["email"], password=u["password"], role=UserRoleEnum[u["role"]]
-        )
+        users = {}
+        for key, u_data in data["users"].items():
+            users[key] = User(**u_data)
 
-    final_scenarios = []
-    for _, service in services.items():
-        for sc in data["scenarios"]:
-            user_key = sc.get("user_id")
+        final_scenarios = []
+        for _, service in services.items():
+            for key, s_data in data["scenarios"].items():
+                scenario = TestScenario(*s_data)
+                user_key = scenario.user_id
 
-            if user_key:
-                user = users.get(user_key)
+                if user_key:
+                    user = users.get(user_key)
 
-                if not user:
-                    raise ValueError(f"User with key {user_key} not found")
-            else:
-                user = None
+                    if not user:
+                        raise ValueError(f"User with key {user_key} not found")
+                else:
+                    user = None
 
-            body = sc.get("body", {})
+                body = scenario.body
 
-            base_name = sc.get("name", f"{sc['method']} {sc['endpoint']}")
-            full_scenario_name = f"[{service.name}] {base_name}"
-            final_scenarios.append(
-                (
-                    full_scenario_name,
-                    service,
-                    user,
-                    sc["method"],
-                    sc["endpoint"],
-                    sc["expected_status"],
-                    body,
+                base_name = (
+                    scenario.name
+                    if scenario.name
+                    else f"{scenario.method}/{scenario.endpoint}"
                 )
-            )
+                full_scenario_name = f"[{service.name}] {base_name}"
+                final_scenarios.append(
+                    (
+                        full_scenario_name,
+                        service,
+                        user,
+                        scenario.method,
+                        scenario.endpoint,
+                        scenario.expected_status,
+                        body,
+                    )
+                )
+    except ValidationError as e:
+        print("BŁĄD KONFIGURACJI JSON!")
+        print(e.json())
+        raise e
 
     return final_scenarios

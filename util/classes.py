@@ -1,19 +1,18 @@
 from enum import Enum
-from dataclasses import dataclass
+from pydantic import BaseModel, field, Literal
 
 
-class TestTypeEnum(Enum):
-    SIMPLE_JWT = 1
-    KEYCLOAK = 2
+class TestTypeEnum(str, Enum):
+    SIMPLE_JWT = "SIMPLE_JWT"
+    KEYCLOAK = "KEYCLOAK"
 
 
-class UserRoleEnum(Enum):
-    BOOK_USER = 1
-    BOOK_ADMIN = 2
+class UserRoleEnum(str, Enum):
+    BOOK_USER = "BOOK_USER"
+    BOOK_ADMIN = "BOOK_ADMIN"
 
 
-@dataclass
-class ServiceConfig:
+class ServiceConfig(BaseModel):
     name: str
     base_url: str
     auth_type: TestTypeEnum
@@ -26,8 +25,17 @@ class ServiceConfig:
         return f"{clean_base}/{clean_endpoint}/"
 
 
-@dataclass
-class User:
+class User(BaseModel):
     email: str
     password: str
     role: UserRoleEnum
+
+
+class TestScenario(BaseModel):
+    name: str = None
+    method: str
+    endpoint: str
+    expected_status: int
+    user_id: str = None
+    body: dict = field(default_factory=dict)
+    overrides: dict = field(default_factory=dict)
