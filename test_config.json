@@ -4,8 +4,7 @@
       "name": "Spring JWT",
       "base_url": "http://localhost:50001",
       "auth_type": "SIMPLE_JWT",
-      "login_url": "http://localhost:50001/api/auth/login/",
-      "client_id": ""
+      "login_url": "http://localhost:50001/api/auth/login/"
     },
     "spring_keycloak": {
       "name": "Spring Keycloak",
@@ -18,8 +17,7 @@
       "name": "Nest JWT",
       "base_url": "http://localhost:50007",
       "auth_type": "SIMPLE_JWT",
-      "login_url": "http://localhost:50007/api/auth/login/",
-      "client_id": ""
+      "login_url": "http://localhost:50007/api/auth/login/"
     },
     "nest_keycloak": {
       "name": "Nest Keycloak",
@@ -32,8 +30,7 @@
       "name": "Django JWT",
       "base_url": "http://localhost:50004",
       "auth_type": "SIMPLE_JWT",
-      "login_url": "http://localhost:50004/api/auth/login/",
-      "client_id": ""
+      "login_url": "http://localhost:50004/api/auth/login/"
     },
     "django_keycloak": {
       "name": "Django Keycloak",
@@ -46,8 +43,7 @@
       "name": "Laravel JWT",
       "base_url": "http://localhost:50010",
       "auth_type": "SIMPLE_JWT",
-      "login_url": "http://localhost:50010/api/auth/login/",
-      "client_id": ""
+      "login_url": "http://localhost:50010/api/auth/login/"
     },
     "laravel_keycloak": {
       "name": "Laravel Keycloak",

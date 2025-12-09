@@ -18,7 +18,7 @@ class ServiceConfig(BaseModel):
     base_url: str
     auth_type: TestTypeEnum
     login_url: str
-    client_id: str
+    client_id: str = ""
 
     def get_url(self, endpoint: str):
         clean_base = self.base_url.rstrip("/")
